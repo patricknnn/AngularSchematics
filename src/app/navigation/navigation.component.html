@@ -1,0 +1,60 @@
+<mat-sidenav-container class="sidenav-container" autosize>
+  <mat-sidenav
+    #drawer
+    class="sidenav"
+    fixedInViewport
+    [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="(isHandset$ | async) === false"
+  >
+    <mat-nav-list style="margin-bottom: 56px">
+      <a mat-list-item routerLink="/dashboard">
+        <mat-icon mat-list-icon>dashboard</mat-icon>
+        <div mat-line *ngIf="!collapse">Dashboard</div>
+      </a>
+      <a mat-list-item routerLink="/address-form">
+        <mat-icon mat-list-icon>local_shipping</mat-icon>
+        <div mat-line *ngIf="!collapse">Address Form</div>
+      </a>
+      <a mat-list-item routerLink="/table">
+        <mat-icon mat-list-icon>table_chart</mat-icon>
+        <div mat-line *ngIf="!collapse">Table</div>
+      </a>
+      <a mat-list-item routerLink="/tree">
+        <mat-icon mat-list-icon>account_tree</mat-icon>
+        <div mat-line *ngIf="!collapse">Tree</div>
+      </a>
+      <a mat-list-item routerLink="/drag-drop">
+        <mat-icon mat-list-icon>pan_tool</mat-icon>
+        <div mat-line *ngIf="!collapse">Drag Drop</div>
+      </a>
+    </mat-nav-list>
+    <div class="sidenav-collapse" *ngIf="(isHandset$ | async) === false">
+      <mat-nav-list style="padding: 0">
+        <a mat-list-item (click)="collapse = !collapse">
+          <mat-icon mat-list-icon>{{
+            collapse ? "chevron_right" : "chevron_left"
+          }}</mat-icon>
+          <div mat-line *ngIf="!collapse">Collapse</div>
+        </a>
+      </mat-nav-list>
+    </div>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <button
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="collapse = false; drawer.toggle()"
+        *ngIf="isHandset$ | async"
+      >
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <span>MaterialSchematics</span>
+    </mat-toolbar>
+    <!-- Add Content Here -->
+    <div style="padding: 1rem">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
